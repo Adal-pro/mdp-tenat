@@ -1,0 +1,9 @@
+# Dependencias (se instalan con npm install, no se suben)
+node_modules/
+
+# Variables de entorno 
+.env
+
+# Logs y archivos del sistema
+npm-debug.log*
+.DS_Store
