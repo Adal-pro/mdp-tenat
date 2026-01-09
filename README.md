@@ -18,7 +18,7 @@ Servicio backend RESTful para gestionar configuraciones de múltiples organizaci
 - **Node.js** + **Express**
 - **PostgreSQL** (Base de datos)
 - **pg** (Cliente Postgres)
-- **Arquitectura:** MVC (Model-View-Controller)
+- **Arquitectura:** En Capas (Layered Architecture: Controller - Service - Repository)
 
 ---
 
@@ -115,25 +115,5 @@ curl -X PUT http://localhost:3000/settings/theme \
 curl -X DELETE http://localhost:3000/settings/theme \
   -H "x-tenant-id: empresa_a"
 ```
-
----
-
-## 📝 Propuesta de Diseño: Audit Log
-
-### 1. Modelo de Datos
-Se recomienda una tabla `audit_logs` independiente (o colección NoSQL) con la estructura:
-- `id`, `tenant_id`, `entity_key`
-- `action` (CREATE, UPDATE, DELETE)
-- `actor_id` (quién hizo el cambio)
-- `changes` (JSONB con valores old_value / new_value)
-- `timestamp`
-
-### 2. Estrategia (Asíncrona)
-- Basada en eventos: el servicio principal emite un evento de dominio (ej. `SettingUpdated`) y un worker/subscriber independiente escribe en el log.
-- **Beneficio:** Desacopla la auditoría de la lógica principal y evita latencia en la respuesta al usuario.
-
-### 3. Escalabilidad
-- **Partitioning:** Particionar la tabla de logs por fecha (ej. mensual).
-- **Colas de Mensajes:** Uso de RabbitMQ/SQS para garantizar la persistencia de los eventos ante picos de tráfico.
 
 ---

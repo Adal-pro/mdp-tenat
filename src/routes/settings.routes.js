@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const settingsController = require('../controller/settings.controller');
+const settingsController = require('../controllers/settings.controller');
 
 // Definición de las rutas
 // Como en server.js usaremos app.use('/settings', ...), aquí solo ponemos la raíz '/'
